@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{0B1ECE39-D2B1-4127-A367-853D3B27FA3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinnesLogic", "BusinnesLogic\BusinnesLogic.csproj", "{5C8DD730-62F2-48B5-9C98-CF16B4507238}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreData", "CoreData\CoreData.csproj", "{62CAE637-748E-427A-963A-4956D74B201D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B1ECE39-D2B1-4127-A367-853D3B27FA3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B1ECE39-D2B1-4127-A367-853D3B27FA3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B1ECE39-D2B1-4127-A367-853D3B27FA3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B1ECE39-D2B1-4127-A367-853D3B27FA3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C8DD730-62F2-48B5-9C98-CF16B4507238}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C8DD730-62F2-48B5-9C98-CF16B4507238}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C8DD730-62F2-48B5-9C98-CF16B4507238}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C8DD730-62F2-48B5-9C98-CF16B4507238}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62CAE637-748E-427A-963A-4956D74B201D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62CAE637-748E-427A-963A-4956D74B201D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62CAE637-748E-427A-963A-4956D74B201D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62CAE637-748E-427A-963A-4956D74B201D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CAFB01FF-D828-4DBE-B18E-0B0FB40AC116}
+	EndGlobalSection
+EndGlobal
