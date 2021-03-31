@@ -1,11 +1,14 @@
-﻿using CoreData.Entities;
+﻿using AutoMapper;
+using CoreData.Entities;
 using CoreData.Interfaces;
+using CoreData.Specification;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.DTOs;
 
 namespace WebApi.Controllers
 {
@@ -13,26 +16,39 @@ namespace WebApi.Controllers
     [ApiController]
     public class ProductosController : ControllerBase
     {
-        private readonly IProductoRepository _producto;
+        private readonly IGenericRepository<Producto> _producto;
+        private readonly IMapper _mapper;
 
-        public ProductosController(IProductoRepository producto)
+        public ProductosController(IGenericRepository<Producto> producto, IMapper mapper)
         {
             this._producto = producto;
+            this._mapper = mapper;
         }
 
+
+        //http://localhost:27768/Productos
         [HttpGet]
         public async Task<ActionResult<List<Producto>>> GetProductos()
         {
-            var Productos =  await this._producto.GetListProductosAsync();
+            var spec = new ProductoRelationships();
 
-            return Ok(Productos);
+            var productos =  await this._producto.GetAllWithSpec(spec);
+
+            return Ok(this._mapper.Map<IReadOnlyList<Producto>, 
+                IReadOnlyList<ProductoDto>>(productos));//Ok cuando es una lista IReadOnlyList
         }
 
+        //http://localhost:27768/Productos/1
         [HttpGet("{id}")]
-        public async Task<ActionResult<Producto>> GetProducto(int id)
+        public async Task<ActionResult<ProductoDto>> GetProducto(int id)
         {
-            return await this._producto.GetProductoByIdAsync(id);
-           
+            //spec = Debe incluir la lógica entre las entidades y la lógica de la condición.
+            var spec = new ProductoRelationships(id);//Si no se le pasa parámetro solo crea las relaciones
+
+            //return await this._producto.GetByIdWithSpec(spec);           
+            var producto = await this._producto.GetByIdWithSpec(spec);
+
+            return this._mapper.Map<Producto, ProductoDto>(producto);
         }
     }
 }
