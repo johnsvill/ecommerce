@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.DTOs;
 
 namespace WebApi
 {
@@ -28,6 +29,8 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
+            services.AddAutoMapper(typeof(MappingProfiles));
             services.AddDbContext<NetMarketDbContext>(opt => {
                 opt.UseSqlServer(Configuration.GetConnectionString("NetMarketConnection"));       
             });
