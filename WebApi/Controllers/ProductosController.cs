@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.DTOs;
+using WebApi.Errors;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductosController : ControllerBase
+    //[Route("api/[controller]")]
+    //[ApiController]
+    public class ProductosController : BaseApiController
     {
         private readonly IGenericRepository<Producto> _producto;
         private readonly IMapper _mapper;
@@ -26,7 +27,7 @@ namespace WebApi.Controllers
         }
 
 
-        //http://localhost:27768/Productos
+        //http://localhost:27768/api/Productos/1000
         [HttpGet]
         public async Task<ActionResult<List<Producto>>> GetProductos()
         {
@@ -34,11 +35,16 @@ namespace WebApi.Controllers
 
             var productos =  await this._producto.GetAllWithSpec(spec);
 
+            if (productos == null)
+            {
+                return NotFound(new CodeErrorResponse(404));
+            }
+
             return Ok(this._mapper.Map<IReadOnlyList<Producto>, 
                 IReadOnlyList<ProductoDto>>(productos));//Ok cuando es una lista IReadOnlyList
         }
 
-        //http://localhost:27768/Productos/1
+        //http://localhost:27768/api/Productos/1
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductoDto>> GetProducto(int id)
         {
@@ -47,6 +53,11 @@ namespace WebApi.Controllers
 
             //return await this._producto.GetByIdWithSpec(spec);           
             var producto = await this._producto.GetByIdWithSpec(spec);
+
+            if(producto == null)
+            {
+                return NotFound(new CodeErrorResponse(404, "El producto no existe"));
+            }
 
             return this._mapper.Map<Producto, ProductoDto>(producto);
         }
