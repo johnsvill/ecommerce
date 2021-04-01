@@ -30,6 +30,6 @@ namespace BusinnesLogic.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());//Para que llame a todas las clases que heredan del IEntityTypeConfiguration
-        }
+        }      
     }
 }
