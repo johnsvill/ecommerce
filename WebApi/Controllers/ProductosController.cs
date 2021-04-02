@@ -4,6 +4,7 @@ using CoreData.Interfaces;
 using CoreData.Specification;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Schema;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,21 +28,46 @@ namespace WebApi.Controllers
         }
 
 
-        //http://localhost:27768/api/Productos/1000
+        //http://localhost:27768/api/Productos/
         [HttpGet]
-        public async Task<ActionResult<List<Producto>>> GetProductos()
+        //string sort, int? marca, int? categoria
+        //Task<ActionResult<List<Producto>>>
+        public async Task<ActionResult<Pagination<ProductoDto>>>
+            GetProductos([FromQuery]ProductoSpecParams productoParams)//FromQuery para especificar que los parámetros provienen de la URL
         {
-            var spec = new ProductoRelationships();
+            //sort, marca, categoria
+            var spec = new ProductoRelationships(productoParams);
 
             var productos =  await this._producto.GetAllWithSpec(spec);
+
+            var specCount = new ProductoForCountSpecs(productoParams);
+
+            var totalProductos = await this._producto.CountAsync(specCount);
+
+            var rounded = Math.Ceiling(Convert.ToDecimal(totalProductos / productoParams.PageSize));//Aproximar al maximo el decimal
+
+            var totalPages = Convert.ToInt32(rounded);
+
+            var data = this._mapper.Map<IReadOnlyList<Producto>, IReadOnlyList<ProductoDto>>(productos);
 
             if (productos == null)
             {
                 return NotFound(new CodeErrorResponse(404));
             }
 
-            return Ok(this._mapper.Map<IReadOnlyList<Producto>, 
-                IReadOnlyList<ProductoDto>>(productos));//Ok cuando es una lista IReadOnlyList
+            return Ok(
+                new Pagination<ProductoDto>
+                {
+                    Count = totalProductos,
+                    Data = data,
+                    PageCount = totalPages,
+                    PageIndex = productoParams.PageIndex,
+                    PageSize = productoParams.PageSize
+                }
+             );
+
+            //return Ok(this._mapper.Map<IReadOnlyList<Producto>, 
+            //    IReadOnlyList<ProductoDto>>(productos));//Ok cuando es una lista IReadOnlyList
         }
 
         //http://localhost:27768/api/Productos/1
@@ -56,7 +82,7 @@ namespace WebApi.Controllers
 
             if(producto == null)
             {
-                return NotFound(new CodeErrorResponse(404, "El producto no existe"));
+                return NotFound(new CodeErrorResponse(404, "El producto no existe"));   
             }
 
             return this._mapper.Map<Producto, ProductoDto>(producto);

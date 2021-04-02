@@ -30,6 +30,12 @@ namespace BusinnesLogic.Data
                 inputQuery = inputQuery.OrderByDescending(spec.OrderByDesc);
             }
 
+            //Validar si la paginación está habilitada
+            if (spec.IsPaginateEnable)
+            {
+                inputQuery = inputQuery.Skip(spec.Skip).Take(spec.Take);
+            }
+
             inputQuery = spec.Includes.Aggregate(inputQuery, (current, include) => current.Include(include));
 
             return inputQuery;

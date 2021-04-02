@@ -9,4 +9,3 @@ C:\Users\johns\OneDrive\Documentos\Proyectos C#\New folder\NetMarket\CoreData\ob
 C:\Users\johns\OneDrive\Documentos\Proyectos C#\New folder\NetMarket\CoreData\obj\Debug\net5.0\CoreData.dll
 C:\Users\johns\OneDrive\Documentos\Proyectos C#\New folder\NetMarket\CoreData\obj\Debug\net5.0\ref\CoreData.dll
 C:\Users\johns\OneDrive\Documentos\Proyectos C#\New folder\NetMarket\CoreData\obj\Debug\net5.0\CoreData.pdb
-C:\Users\johns\OneDrive\Documentos\Proyectos C#\New folder\NetMarket\CoreData\obj\Debug\net5.0\CoreData.csprojAssemblyReference.cache

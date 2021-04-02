@@ -14,5 +14,6 @@ namespace CoreData.Interfaces
         Task<IReadOnlyList<T>> GetListAsync();
         Task<T> GetByIdWithSpec(ISpecification<T> spec);
         Task<IReadOnlyList<T>> GetAllWithSpec(ISpecification<T> spec);
+        Task<int> CountAsync(ISpecification<T> spec);
     }
 }
