@@ -31,7 +31,7 @@ namespace CoreData.Specification
 
         public Expression<Func<T, object>> OrderBy { get; private set; }
 
-        public Expression<Func<T, object>> OrderByDesc { get; private set; }
+        public Expression<Func<T, object>> OrderByDesc { get; private set; }       
 
         protected void AddOrderBy(Expression<Func<T, object>> orderByExpression)
         {
@@ -41,6 +41,20 @@ namespace CoreData.Specification
         protected void AddOrderByDesc(Expression<Func<T, object>> orderByDescExpression)
         {
             OrderByDesc = orderByDescExpression;
+        }
+
+        public int Take { get; private set; }
+
+        public int Skip { get; private set; }
+
+        public bool IsPaginateEnable { get; private set; }
+
+        //Inicializar las variables
+        protected void ApplyPaginate(int skip, int take)
+        {
+            Take = take;
+            Skip = skip;
+            IsPaginateEnable = true;
         }
     }
 }
